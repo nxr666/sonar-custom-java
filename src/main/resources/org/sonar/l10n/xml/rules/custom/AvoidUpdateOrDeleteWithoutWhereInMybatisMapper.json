@@ -1,0 +1,18 @@
+{
+  "title": "Avoid UPDATE/DELETE without WHERE condition in MyBatis mapper SQL",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "sql",
+    "mybatis",
+    "pitfall",
+    "data-loss"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidUpdateOrDeleteWithoutWhereInMybatisMapper",
+  "scope": "Main"
+}

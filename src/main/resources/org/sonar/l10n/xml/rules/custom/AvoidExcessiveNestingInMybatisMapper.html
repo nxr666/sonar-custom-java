@@ -1,0 +1,27 @@
+<p>
+  Deeply nested subqueries make SQL hard to reason about and tune.
+  In mapper XML, prefer flattening query structure or splitting logic into simpler queries.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT *
+  FROM users u
+  WHERE u.id IN (
+    SELECT user_id FROM orders
+    WHERE product_id IN (
+      SELECT id FROM products WHERE deleted = 0
+    )
+  )
+&lt;/select&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT u.id
+  FROM users u
+  WHERE u.id IN (SELECT user_id FROM orders)
+&lt;/select&gt;
+</pre>

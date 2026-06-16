@@ -1,0 +1,20 @@
+<p>
+  In Spring, <code>@Transactional</code> may not rollback for checked exceptions by default.
+  To avoid unexpected commits, configure <code>rollbackFor = Exception.class</code> (or stricter) explicitly.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@Transactional // Noncompliant
+public void createOrder() throws Exception {
+  // business logic
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+@Transactional(rollbackFor = Exception.class)
+public void createOrder() throws Exception {
+  // business logic
+}
+</pre>

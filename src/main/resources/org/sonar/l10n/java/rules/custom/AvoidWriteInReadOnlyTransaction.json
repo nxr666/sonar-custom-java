@@ -1,0 +1,17 @@
+{
+  "title": "Avoid write operations in read-only transactions",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "spring",
+    "transaction",
+    "bug"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidWriteInReadOnlyTransaction",
+  "scope": "Main"
+}

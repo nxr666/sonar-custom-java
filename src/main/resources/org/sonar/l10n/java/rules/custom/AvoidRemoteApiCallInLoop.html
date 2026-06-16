@@ -1,0 +1,22 @@
+<p>
+  Calling remote APIs (HTTP/Feign/WebClient, etc.) inside loops can create N+1 network requests, causing high latency,
+  timeout risk, and pressure on downstream services.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+for (User user : users) {
+  remoteClient.getProfile(user.getId());
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+List&lt;String&gt; userIds = users.stream().map(User::getId).toList();
+Map&lt;String, Profile&gt; profileMap = remoteClient.batchGetProfiles(userIds);
+for (User user : users) {
+  Profile profile = profileMap.get(user.getId());
+  // use profile
+}
+</pre>
+

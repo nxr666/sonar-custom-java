@@ -1,0 +1,18 @@
+<p>
+  Physical delete (<code>DELETE FROM ...</code>) can permanently remove business data and makes data recovery/audit harder.
+  In most business scenarios, prefer logical delete (for example, updating a deleted flag and keeping history).
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;delete id="removeUserById"&gt;
+  DELETE FROM users WHERE id = #{id}
+&lt;/delete&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;update id="removeUserById"&gt;
+  UPDATE users SET deleted = 1, deleted_time = NOW() WHERE id = #{id}
+&lt;/update&gt;
+</pre>

@@ -1,0 +1,18 @@
+<p>
+  Writing <code>INSERT INTO table VALUES (...)</code> without an explicit column list is fragile:
+  schema changes or column order changes can silently corrupt inserted data.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;insert id="saveUser"&gt;
+  INSERT INTO users VALUES (#{id}, #{name}, #{email})
+&lt;/insert&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;insert id="saveUser"&gt;
+  INSERT INTO users (id, name, email) VALUES (#{id}, #{name}, #{email})
+&lt;/insert&gt;
+</pre>

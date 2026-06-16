@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.sonar.custom</groupId>
+    <artifactId>custom-java-rules</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>sonar-plugin</packaging>
+
+    <name>Custom Java Rules</name>
+    <description>Custom SonarQube Java rules plugin</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- SonarQube 8.9.7.52159; align with server bundled sonar-java 6.15.1.26025. -->
+        <sonar.plugin.api.version>8.9.7.52159</sonar.plugin.api.version>
+        <sonar.java.version>6.15.1.26025</sonar.java.version>
+        <sonar.analyzer.commons.version>1.14.1.690</sonar.analyzer.commons.version>
+        <sonar.packaging.plugin.version>1.20.0.405</sonar.packaging.plugin.version>
+
+        <!-- Test dependencies -->
+        <junit.version>5.10.2</junit.version>
+        <assertj.version>3.25.3</assertj.version>
+    </properties>
+
+    <dependencies>
+        <!-- SonarQube Plugin API -->
+        <dependency>
+            <groupId>org.sonarsource.sonarqube</groupId>
+            <artifactId>sonar-plugin-api</artifactId>
+            <version>${sonar.plugin.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- SonarJava Plugin -->
+        <dependency>
+            <groupId>org.sonarsource.java</groupId>
+            <artifactId>sonar-java-plugin</artifactId>
+            <version>${sonar.java.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Sonar Analyzer Commons for rule metadata loading -->
+        <dependency>
+            <groupId>org.sonarsource.analyzer-commons</groupId>
+            <artifactId>sonar-analyzer-commons</artifactId>
+            <version>${sonar.analyzer.commons.version}</version>
+        </dependency>
+
+        <!-- SonarJava Check API -->
+        <dependency>
+            <groupId>org.sonarsource.java</groupId>
+            <artifactId>java-checks-testkit</artifactId>
+            <version>${sonar.java.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- AssertJ -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- SonarQube Plugin Packaging -->
+            <plugin>
+                <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+                <artifactId>sonar-packaging-maven-plugin</artifactId>
+                <version>${sonar.packaging.plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <pluginKey>custom-java-rules</pluginKey>
+                    <pluginClass>org.sonar.custom.java.CustomJavaRulesPlugin</pluginClass>
+                    <pluginName>Custom Java Rules</pluginName>
+                    <pluginDescription>Custom Java rules for code quality</pluginDescription>
+                    <!-- Nested META-INF/lib + Plugin-Dependencies is not reliably on CP for RulesDefinition in recent SQ; embed classes via dependency-plugin instead -->
+                    <sonarLintSupported>false</sonarLintSupported>
+                    <skipDependenciesPackaging>true</skipDependenciesPackaging>
+                    <sonarQubeMinVersion>8.9</sonarQubeMinVersion>
+                    <requirePlugins>java:${sonar.java.version}</requirePlugins>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire Plugin for tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+
+            <!-- Unpack analyzer-commons into target/classes so RuleMetadataLoader lives in the plugin realm (not only META-INF/lib). -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>unpack-sonar-analyzer-commons</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <includeGroupIds>org.sonarsource.analyzer-commons</includeGroupIds>
+                            <includeArtifactIds>sonar-analyzer-commons</includeArtifactIds>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <excludeTransitive>false</excludeTransitive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

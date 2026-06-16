@@ -1,0 +1,20 @@
+<p>
+  Transaction context in Spring does not automatically propagate to new threads or async task bodies.
+  Write operations inside those async boundaries may execute outside the current transaction.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@Transactional
+public void createOrder() {
+  executor.submit(() -> orderMapper.insert(order)); // Noncompliant
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+@Transactional
+public void createOrder() {
+  orderMapper.insert(order);
+}
+</pre>

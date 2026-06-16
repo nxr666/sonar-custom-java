@@ -1,0 +1,21 @@
+<p>
+  Calling a <code>@Transactional</code> method from within the same class bypasses the Spring proxy, so transaction advice may not run.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@Transactional
+public void saveInTx() { ... }
+
+public void create() {
+  this.saveInTx(); // self-invocation bypasses proxy
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+@Transactional
+public void saveInTx() { ... }
+
+// call saveInTx() through another Spring bean (proxy boundary)
+</pre>

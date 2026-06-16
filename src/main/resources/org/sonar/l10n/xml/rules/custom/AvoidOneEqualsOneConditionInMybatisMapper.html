@@ -1,0 +1,21 @@
+<p>
+  Using <code>1=1</code> as a placeholder predicate makes SQL harder to read and can hide condition-construction issues.
+  In MyBatis mapper XML, prefer explicit dynamic conditions without tautological clauses.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT id, name FROM users WHERE 1=1
+&lt;/select&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT id, name FROM users
+  <where>
+    <if test="id != null">AND id = #{id}</if>
+  </where>
+&lt;/select&gt;
+</pre>

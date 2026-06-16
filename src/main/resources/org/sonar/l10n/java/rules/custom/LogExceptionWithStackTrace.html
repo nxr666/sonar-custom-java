@@ -1,0 +1,22 @@
+<p>
+  Catching a broad <code>Exception</code> without logging its stack trace makes production failures hard to diagnose.
+  Logging only <code>e.getMessage()</code> loses the call stack and root context.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+try {
+  process();
+} catch (Exception e) {
+  log.error("process failed: {}", e.getMessage()); // Noncompliant
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+try {
+  process();
+} catch (Exception e) {
+  log.error("process failed", e); // stack trace is logged
+}
+</pre>

@@ -1,0 +1,17 @@
+{
+  "title": "Avoid transactional self-invocation",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "20min"
+  },
+  "tags": [
+    "spring",
+    "transaction",
+    "bug"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidTransactionalSelfInvocation",
+  "scope": "Main"
+}

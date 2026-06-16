@@ -1,0 +1,26 @@
+<p>
+  Executing database queries inside loops often leads to the <em>N+1 query problem</em>, where a query is executed once to
+  fetch a list of items and then executed again for each item in the list. This increases latency and load on the database.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+for (User user : users) {
+  // Each iteration triggers a database call
+  orderRepository.findByUserId(user.getId());
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+List&lt;Long&gt; userIds = users.stream().map(User::getId).toList();
+Map&lt;Long, List&lt;Order&gt;&gt; ordersByUser = orderRepository.findByUserIdIn(userIds)
+  .stream()
+  .collect(groupingBy(Order::getUserId));
+
+for (User user : users) {
+  List&lt;Order&gt; orders = ordersByUser.getOrDefault(user.getId(), List.of());
+  // use orders
+}
+</pre>
+

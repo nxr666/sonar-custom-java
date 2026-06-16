@@ -1,0 +1,17 @@
+{
+  "title": "Require rollbackFor for @Transactional",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "10min"
+  },
+  "tags": [
+    "spring",
+    "transaction",
+    "bug"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "RequireRollbackForExceptionInTransactional",
+  "scope": "Main"
+}

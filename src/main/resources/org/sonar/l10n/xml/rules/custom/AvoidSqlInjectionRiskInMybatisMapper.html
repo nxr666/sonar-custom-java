@@ -1,0 +1,23 @@
+<p>
+  Using <code>${...}</code> in MyBatis mapper SQL performs direct string substitution and can introduce SQL injection risk.
+  Prefer <code>#{...}</code> parameter binding so values are passed safely as prepared-statement parameters.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT id, name FROM users WHERE name = ${name}
+&lt;/select&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT id, name FROM users WHERE name = #{name}
+&lt;/select&gt;
+</pre>
+
+<p>
+  If dynamic identifiers (for example column names in ORDER BY) are unavoidable, use strict server-side allowlists
+  before interpolation.
+</p>

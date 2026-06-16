@@ -1,0 +1,18 @@
+{
+  "title": "Avoid excessive nested subqueries in MyBatis mapper SQL",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "sql",
+    "mybatis",
+    "maintainability",
+    "readability"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidExcessiveNestingInMybatisMapper",
+  "scope": "Main"
+}

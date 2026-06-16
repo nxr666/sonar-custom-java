@@ -1,0 +1,30 @@
+<p>
+  Controller methods should orchestrate request/response flow, while transaction boundaries should be owned by
+  Service-layer methods. Putting <code>@Transactional</code> on Controller methods couples web and transaction concerns.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@RestController
+class OrderController {
+  @Transactional
+  public String create() { ... }
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+@RestController
+class OrderController {
+  public String create() {
+    orderService.create();
+    return "ok";
+  }
+}
+
+@Service
+class OrderService {
+  @Transactional
+  public void create() { ... }
+}
+</pre>

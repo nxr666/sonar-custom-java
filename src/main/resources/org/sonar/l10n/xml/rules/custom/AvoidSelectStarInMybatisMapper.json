@@ -1,0 +1,18 @@
+{
+  "title": "Avoid SELECT * in MyBatis mapper SQL",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "sql",
+    "mybatis",
+    "bad-practice",
+    "performance"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidSelectStarInMybatisMapper",
+  "scope": "Main"
+}

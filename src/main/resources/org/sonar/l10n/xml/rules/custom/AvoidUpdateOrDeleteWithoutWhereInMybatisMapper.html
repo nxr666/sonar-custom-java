@@ -1,0 +1,26 @@
+<p>
+  Executing <code>UPDATE</code> or <code>DELETE</code> without a <code>WHERE</code> condition may affect all rows in a table,
+  causing severe data corruption or loss.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;update id="disableUsers"&gt;
+  UPDATE users SET enabled = 0
+&lt;/update&gt;
+
+&lt;delete id="clearOrders"&gt;
+  DELETE FROM orders
+&lt;/delete&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;update id="disableUsers"&gt;
+  UPDATE users SET enabled = 0 WHERE tenant_id = #{tenantId}
+&lt;/update&gt;
+
+&lt;delete id="clearOrders"&gt;
+  DELETE FROM orders WHERE tenant_id = #{tenantId}
+&lt;/delete&gt;
+</pre>

@@ -1,0 +1,17 @@
+{
+  "title": "Avoid remote API calls inside loops",
+  "type": "CODE_SMELL",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "30min"
+  },
+  "tags": [
+    "performance",
+    "bad-practice"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidRemoteApiCallInLoop",
+  "scope": "Main"
+}
+

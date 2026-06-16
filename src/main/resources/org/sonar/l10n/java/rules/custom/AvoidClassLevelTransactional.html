@@ -1,0 +1,20 @@
+<p>
+  Declaring <code>@Transactional</code> on a class makes transaction boundaries implicit for all methods and can hide
+  transactional intent. Enforce method-level transactions to keep behavior explicit and reviewable.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@Transactional
+class OrderService {
+  public void create() { ... }
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+class OrderService {
+  @Transactional
+  public void create() { ... }
+}
+</pre>

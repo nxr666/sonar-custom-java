@@ -1,0 +1,17 @@
+{
+  "title": "Avoid invalid @Transactional targets",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "15min"
+  },
+  "tags": [
+    "spring",
+    "transaction",
+    "bug"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidInvalidTransactionalTarget",
+  "scope": "Main"
+}

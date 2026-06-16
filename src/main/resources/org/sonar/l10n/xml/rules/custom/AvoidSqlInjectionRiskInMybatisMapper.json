@@ -1,0 +1,18 @@
+{
+  "title": "Avoid ${...} string substitution in MyBatis mapper SQL",
+  "type": "VULNERABILITY",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "20min"
+  },
+  "tags": [
+    "sql",
+    "mybatis",
+    "injection",
+    "security"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidSqlInjectionRiskInMybatisMapper",
+  "scope": "Main"
+}

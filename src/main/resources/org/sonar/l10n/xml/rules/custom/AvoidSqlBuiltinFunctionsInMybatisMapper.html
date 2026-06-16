@@ -1,0 +1,23 @@
+<p>
+  Non-standard (vendor-specific) SQL functions vary across database vendors and versions. SQL standard functions are
+  not targeted by this rule. Keeping mapper SQL close to ANSI basics and moving formatting, parsing, and calculations
+  to Java reduces migration risk and keeps behavior consistent in tests.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;select id="findUser" resultType="User"&gt;
+  SELECT id, DATE_FORMAT(created_at, '%Y-%m-%d') AS createdDate FROM users WHERE id = #{id}
+&lt;/select&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;select id="findUser" resultType="User"&gt;
+  SELECT id, name FROM users WHERE id = #{id}
+&lt;/select&gt;
+</pre>
+<p>
+  Normalize or transform values in the service layer before persistence or after load, instead of calling
+  vendor-specific functions in XML.
+</p>

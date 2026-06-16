@@ -1,0 +1,24 @@
+<p>
+  Some <code>@Transactional</code> targets are ineffective with proxy-based AOP and can lead to missing transaction boundaries.
+</p>
+
+<h2>Risky Patterns</h2>
+<ul>
+  <li><code>@Transactional</code> on <code>private</code> or <code>static</code> methods</li>
+  <li><code>@Transactional</code> on <code>final</code> classes or <code>final</code> methods</li>
+</ul>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@Transactional
+private void saveInTx() { ... } // ineffective
+
+@Transactional
+public final void updateInTx() { ... } // risky
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+@Transactional
+public void saveInTx() { ... }
+</pre>

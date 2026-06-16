@@ -1,0 +1,24 @@
+<p>
+  SQL with too many JOINs is difficult to understand and often expensive to execute.
+  In MyBatis mapper XML, excessive joins also make migration and tuning more fragile.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT u.id
+  FROM users u
+  JOIN dept d ON d.id = u.dept_id
+  LEFT JOIN org o ON o.id = d.org_id
+  INNER JOIN tenant t ON t.id = o.tenant_id
+&lt;/select&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;select id="queryUsers" resultType="User"&gt;
+  SELECT u.id, d.name
+  FROM users u
+  LEFT JOIN dept d ON d.id = u.dept_id
+&lt;/select&gt;
+</pre>

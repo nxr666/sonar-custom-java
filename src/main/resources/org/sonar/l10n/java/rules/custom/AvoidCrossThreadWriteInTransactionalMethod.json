@@ -1,0 +1,18 @@
+{
+  "title": "Avoid cross-thread writes inside transactional methods",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "20min"
+  },
+  "tags": [
+    "spring",
+    "transaction",
+    "concurrency",
+    "bug"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidCrossThreadWriteInTransactionalMethod",
+  "scope": "Main"
+}

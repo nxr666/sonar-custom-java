@@ -1,0 +1,18 @@
+{
+  "title": "Avoid swallowing exceptions in transactional methods",
+  "type": "BUG",
+  "status": "ready",
+  "remediation": {
+    "func": "Constant/Issue",
+    "constantCost": "20min"
+  },
+  "tags": [
+    "spring",
+    "transaction",
+    "error-handling",
+    "bug"
+  ],
+  "defaultSeverity": "Blocker",
+  "sqKey": "AvoidSwallowingExceptionInTransactionalMethod",
+  "scope": "Main"
+}

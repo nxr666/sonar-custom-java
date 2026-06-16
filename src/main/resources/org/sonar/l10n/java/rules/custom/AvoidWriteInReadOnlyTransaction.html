@@ -1,0 +1,20 @@
+<p>
+  Methods marked with <code>@Transactional(readOnly = true)</code> should not perform data-modifying operations.
+  Write calls in read-only transactions can cause inconsistent behavior and transaction misuse.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@Transactional(readOnly = true)
+public void syncData() {
+  userMapper.updateById(user); // Noncompliant
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+@Transactional(readOnly = true)
+public User loadUser(Long id) {
+  return userMapper.selectById(id);
+}
+</pre>

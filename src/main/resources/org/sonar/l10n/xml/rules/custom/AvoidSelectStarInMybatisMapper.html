@@ -1,0 +1,18 @@
+<p>
+  Using <code>SELECT *</code> (or <code>SELECT DISTINCT *</code>) in MyBatis mapper SQL makes result mappings fragile:
+  column order changes, unused columns increase I/O, and schema changes can break consumers silently.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+&lt;select id="findUser" resultType="User"&gt;
+  SELECT * FROM users WHERE id = #{id}
+&lt;/select&gt;
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+&lt;select id="findUser" resultType="User"&gt;
+  SELECT id, name, email FROM users WHERE id = #{id}
+&lt;/select&gt;
+</pre>

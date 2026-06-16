@@ -1,0 +1,31 @@
+<p>
+  In <code>@Transactional</code> methods, swallowing exceptions in a catch block without rethrowing or marking rollback-only
+  can cause partial commits and inconsistent data.
+</p>
+
+<h2>Noncompliant Code Example</h2>
+<pre>
+@Transactional
+public boolean createOrder() {
+  try {
+    orderMapper.insert(order);
+    return true;
+  } catch (Exception e) {
+    log.warn("failed: {}", e.getMessage());
+    return true; // Noncompliant (exception swallowed)
+  }
+}
+</pre>
+
+<h2>Compliant Solution</h2>
+<pre>
+@Transactional
+public boolean createOrder() {
+  try {
+    orderMapper.insert(order);
+    return true;
+  } catch (Exception e) {
+    throw e;
+  }
+}
+</pre>
